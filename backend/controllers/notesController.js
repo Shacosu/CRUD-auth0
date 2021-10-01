@@ -1,8 +1,9 @@
 import Note from "../models/notesModel.js";
 
 const getAllNotes = async (req, res) => {
+    const {nickname} = req.params;
 	try {
-        const allNotes = await Note.find({});
+        const allNotes = await Note.find({ name: nickname});
         res.send(allNotes);
     } catch (error) {
         throw new Error(error);
@@ -23,7 +24,6 @@ const addNewNote = async (req, res) => {
         
     } catch (error) {
         throw new Error(error);
-        next(error);
     }
 };
 
@@ -37,6 +37,20 @@ const deleteNote = async (req, res) => {
     }
 }
 
+const updateNotes = async (req, res) => {
+    const { id, title, content } = req.body;
+    console.log(title, content, id)
+    try {
+        await Note.findByIdAndUpdate(id, {
+            title: title,
+            content: content
+        });
+        res.send('Tarea actualizada');
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 
-export { getAllNotes, addNewNote, deleteNote };
+
+export { getAllNotes, addNewNote, deleteNote, updateNotes };

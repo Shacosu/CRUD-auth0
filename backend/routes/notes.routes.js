@@ -1,12 +1,14 @@
 import express from 'express';
 const app = express.Router();
 
-import { getAllNotes, addNewNote, deleteNote } from '../controllers/notesController.js';
+import { getAllNotes, addNewNote, deleteNote, updateNotes } from '../controllers/notesController.js';
 
-
-app.get("/", getAllNotes);
 
 app.post("/", addNewNote);
+
+app.get("/:nickname", getAllNotes);
+
+app.put('/update', updateNotes);
 
 app.delete('/delete/:id', deleteNote);
 
